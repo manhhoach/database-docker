@@ -1,0 +1,131 @@
+GET /_cat/indices?v => get all indexes;
+GET /<index_name>/_doc/<id> => get document from index by id 
+
+
+PUT /<index_name>?v => create a new index
+PUT /<index_name>/_doc/<id>  => add document into index
+{
+  "name": "anh mạnh",
+  "age": 20
+}
+PUT /<index_name>/_doc/<id>  => update document
+{
+  "name": "anh mạnh",
+  "age": 20
+}
+
+DELETE /<index_name>?v => delete index
+DELETE /<index_name>/_doc/<id> => delete document
+
+
+POST /_bulk 
+{"index": {"_index": "student", "_id": 7}} // where
+{"name": "Updated","age": 100} // data
+{"index": {"_index": "student", "_id": 8}}
+{"name": "Updated 5","age": 100}
+=> update or create 
+
+
+
+//search
+
+GET /tokens/_search
+{
+  "query": {
+    "match_all": {}
+  }
+}
+GET /bank/_search?pretty
+{
+  "query": {"match": {
+    "address": "mill lane"
+    }},
+  "sort": [
+    {
+      "balance": {
+        "order": "desc"
+      }
+    }
+  ],
+  "size": 20,
+  "_source": [
+    "account_number",
+    "balance",
+    "firstname",
+    "lastname",
+    "address"
+  ],
+  "from": 10
+}
+
+
+GET /bank/_search?pretty
+{
+  "query": {
+    "bool": {
+      "should": [ // must <=> &&, should <=> ||
+        {
+          "match": {  "address": "mill" }
+        },
+        {
+          "match": {  "address": "lane"  }
+        }
+      ]
+    }
+  }
+}
+
+// location
+
+PUT /places
+{
+  "mappings": {
+    "properties": {
+          "location": {
+            "type": "geo_point"
+          }
+        }
+  }
+}
+
+POST /_bulk
+{ "index": {"_index": "places"}}
+{ "name": "Hoan Kiem Lake", "location": {"lat": 21.0287747,"lon": 105.8497898}}
+{ "index": {"_index": "places"}}
+{ "name": "BX yen nghia", "location": {"lat": 20.9505794, "lon": 105.7440546}}
+{ "index": {"_index": "places"}}
+{ "name": "dai hoc gtvt", "location": {"lat": 21.0281,"lon": 105.8008}}
+{ "index": {"_index": "places"}}
+{ "name": "Homa edu", "location": {"lat": 21.0204027,"lon": 105.776838}}
+{ "index": {"_index": "places"}}
+{ "name": "honda vu hoang le", "location": {"lat": 20.9758971,"lon": 105.7802642}}
+
+GET /places/_search
+{
+  "query": {
+    "bool": {
+      "filter": {
+        "geo_distance": {
+          "distance": "20km",
+          "location": {
+            "lat": 20.9438987,
+            "lon": 105.7614129
+          }
+        }
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+?v: get datatype of each result 
+id: if not set id, it has been created (apply for POST method)
+

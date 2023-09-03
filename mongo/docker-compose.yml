@@ -1,0 +1,11 @@
+version: '3'
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo-local
+    volumes:
+      - ./mongo_data:/data/db
+    ports:
+      - 27017:27017
+volumes:
+  mongo_data:
