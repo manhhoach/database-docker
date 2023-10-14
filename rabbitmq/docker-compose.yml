@@ -2,6 +2,7 @@ version: '3'
 services:
   rabbitmq:
     image: rabbitmq:3.12-management
+    restart: unless-stopped
     container_name: rabbitmq-local
     ports:
       - 5672:5672

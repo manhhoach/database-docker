@@ -2,6 +2,7 @@ version: '3'
 services:
   mongo:
     image: mongo:latest
+    restart: unless-stopped
     container_name: mongo-local
     volumes:
       - ./mongo_data:/data/db
