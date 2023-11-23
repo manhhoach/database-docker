@@ -2,8 +2,8 @@ version: '3'
 services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.17.1
-    container_name: elasticsearch-local
-    restart: unless-stopped
+    container_name: es-local
+    restart: no
     environment:
       - node.name=elasticsearch
       - discovery.seed_hosts=elasticsearch
@@ -22,12 +22,16 @@ services:
       timeout: 10s
       retries: 5
 
-  kibana:
-    image: docker.elastic.co/kibana/kibana:7.17.1
-    restart: unless-stopped
-    container_name: kibana-local
-    ports:
-      - 5601:5601
-    depends_on:
-      - elasticsearch
+  # kibana:
+  #   image: docker.elastic.co/kibana/kibana:7.17.1
+  #   restart: no
+  #   container_name: kibana-local
+  #   ports:
+  #  - 5601:5601
+  #   depends_on:
+  #     elasticsearch:
+  #       condition: service_healthy
+
+# wsl -d docker-desktop
+# sysctl -w vm.max_map_count=262144
 
