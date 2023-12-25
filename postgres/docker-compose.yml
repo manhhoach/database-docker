@@ -10,5 +10,6 @@ services:
       - 5432:5432
     environment:
       POSTGRES_PASSWORD: manh123456
+
 volumes:
   postgres_data:
