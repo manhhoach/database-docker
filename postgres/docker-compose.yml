@@ -10,6 +10,11 @@ services:
       - 5432:5432
     environment:
       POSTGRES_PASSWORD: manh123456
-
+    networks:
+      - db
 volumes:
   postgres_data:
+
+networks: 
+  db: 
+    external: true
