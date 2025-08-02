@@ -10,11 +10,5 @@ services:
       - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: manh123456
-    networks:
-      - db
 volumes:
   mysql_data:
-
-networks: 
-  db: 
-    external: true
